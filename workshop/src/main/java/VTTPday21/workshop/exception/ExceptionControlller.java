@@ -22,7 +22,7 @@ public class ExceptionControlller {
         ApiError apiError = new ApiError(404, ex.getMessage(), new Date());
 
         return new ResponseEntity<ApiError>(apiError, HttpStatus.NOT_FOUND);
-    };
+    }
 
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<ApiError> handleOrderNotFoundException(OrderNotFoundException ex, HttpServletRequest request, HttpServletResponse resp){
@@ -30,7 +30,7 @@ public class ExceptionControlller {
         ApiError apiError = new ApiError(404, ex.getMessage(), new Date()); //message input in repository
 
         return new ResponseEntity<ApiError>(apiError, HttpStatus.NOT_FOUND);
-    };
+    }
 
 
 

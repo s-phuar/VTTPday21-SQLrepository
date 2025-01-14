@@ -65,6 +65,7 @@ public class CustomerRepository {
 
 
     public boolean deleteCustomerById(int id){
+        //returns number of rows affected by update
         int customerDeleted = template.update(sql.sql_deleteCustomerById, id);
 
         if(customerDeleted > 0){
@@ -74,9 +75,9 @@ public class CustomerRepository {
     }
 
     public boolean updateCustomerById(Customer customer){
+        //returns number of rows affected by update
         int customerUpdated = template.update(sql.sql_updateCustomerById, customer.getFullname(), customer.getEmail(), customer.getId());
 
-        //int is number of rows affected by the update oeparation
         if(customerUpdated > 0){
             return true;
         }
@@ -85,6 +86,7 @@ public class CustomerRepository {
 
 
     public boolean insertCustomer(Customer customer){
+        //returns number of rows affected by update
         int customerUpdated = template.update(sql.sql_insertCustomer, customer.getFullname(), customer.getEmail());
 
         if(customerUpdated > 0){
