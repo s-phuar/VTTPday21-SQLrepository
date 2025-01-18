@@ -19,7 +19,7 @@ public class Customer {
     private String country_region;
     private String web_page;
     private String notes;
-    // private byte[] attachments;
+    private byte[] attachments;
 
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
@@ -55,8 +55,8 @@ public class Customer {
     public void setWeb_page(String web_page) {this.web_page = web_page;}
     public String getNotes() {return notes;}
     public void setNotes(String notes) {this.notes = notes;}
-    // public byte[] getAttachments() {return attachments;}
-    // public void setAttachments(byte[] attachments) {this.attachments = attachments;}
+    public byte[] getAttachments() {return attachments;}
+    public void setAttachments(byte[] attachments) {this.attachments = attachments;}
 
 
     

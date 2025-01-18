@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import VTTPday21.workshop.model.Customer;
+import VTTPday21.workshop.model.Orders;
 import VTTPday21.workshop.repository.CustomerRepository;
 
 @Service
@@ -21,6 +22,10 @@ public class CustomerService {
 
     public Customer getCustomerById(int id){
         return customerRepository.getCustomerById(id);
+    }
+
+    public List<Orders> getOrdersByCustomerId(int id){
+        return customerRepository.getOrdersByCustomerId(id);
     }
 
 

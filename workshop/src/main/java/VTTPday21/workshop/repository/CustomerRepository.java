@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import VTTPday21.workshop.model.Customer;
+import VTTPday21.workshop.model.Orders;
 import VTTPday21.workshop.model.exception.IDNotFoundException;
 import VTTPday21.workshop.utils.sql;
 
@@ -44,14 +45,14 @@ public class CustomerRepository {
             cus.setCountry_region(sqlRowSet.getString("country_region"));
             cus.setWeb_page(sqlRowSet.getString("web_page"));
             cus.setNotes(sqlRowSet.getString("notes"));
-            //include one for attachments
+            //not getBytes method for SqlRowSet
+            byte[] blob = (byte[]) sqlRowSet.getObject("attachments");
+            cus.setAttachments(blob);
 
             customers.add(cus);
         }
         return customers;
     }
-
-
 
 
     public Customer getCustomerById(int id){
@@ -62,9 +63,24 @@ public class CustomerRepository {
         }catch(DataAccessException ex){ //JdbcTemplate class always throws DataAccessException whenever theres an error
             throw new IDNotFoundException("Customer with id: " + id + " is not found");
         }
-
         return c;
+    }
 
+
+    public List<Orders> getOrdersByCustomerId(int id){
+        List<Orders> orderList = new ArrayList<>();
+
+        try{
+        orderList = template.query(sql.sql_getAllOrdersByCustomerId, BeanPropertyRowMapper.newInstance(Orders.class),id);
+        if (orderList.isEmpty()) {
+            throw new IDNotFoundException("Customer with id: " + id + " has no orders");
+        }    
+    
+        }catch(DataAccessException ex){
+            throw new IDNotFoundException("Customer with id: " + id + " has no orders");
+        }
+
+        return orderList;
     }
 
 
