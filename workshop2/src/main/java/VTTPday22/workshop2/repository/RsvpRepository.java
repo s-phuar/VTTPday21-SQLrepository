@@ -52,7 +52,7 @@ public class RsvpRepository {
     }
 
     public boolean updateRSVPByEmail(RSVP rsvp){
-        int rsvpUpdated = template.update(sql.sqsl_updateRsvpByEmail, rsvp.getName(), rsvp.getPhone(), rsvp.getComments(), rsvp.getEmail());//removed confirmation_Date
+        int rsvpUpdated = template.update(sql.sqsl_updateRsvpByEmail, rsvp.getName(), rsvp.getPhone(), rsvp.getConfirmation_date(), rsvp.getComments(), rsvp.getEmail());
 
         if(rsvpUpdated > 0){
             return true;
@@ -62,7 +62,7 @@ public class RsvpRepository {
     }
 
     public boolean insertRsvp(RSVP rsvp){
-        int rsvpUpdated = template.update(sql.sql_insertRsvp, rsvp.getName(), rsvp.getEmail(), rsvp.getPhone(), rsvp.getComments());//removed confirmation_Date
+        int rsvpUpdated = template.update(sql.sql_insertRsvp, rsvp.getName(), rsvp.getEmail(), rsvp.getPhone(), rsvp.getConfirmation_date(), rsvp.getComments());
 
         if(rsvpUpdated > 0){
             return true;

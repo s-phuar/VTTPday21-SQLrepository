@@ -1,5 +1,7 @@
 package VTTPday22.workshop2.controller;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,27 +42,32 @@ public class RsvpRESTController {
 
 
     //localhost:8080/api/rsvp
+    //include queryparams as part of form
+    //inserting, use putmapping in thunderclient
     @PutMapping(path="/rsvp", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Boolean> insertRsvpByEmail(
-        @RequestParam MultiValueMap<String, String> form){
+        @RequestParam MultiValueMap<String, String> form) throws ParseException{
         
         RSVP rsvp = new RSVP();
         rsvp.setName(form.getFirst("name"));
         rsvp.setEmail(form.getFirst("email"));
         rsvp.setPhone(form.getFirst("phone"));
+        //String to Date parser
+        Date date = RSVP.strToDate(form.getFirst("confirmation_date"));
+        rsvp.setConfirmation_date(date);
         rsvp.setComments(form.getFirst("comments"));
 
         try{
-        if(rsvpService.getRsvpByEmail(form.getFirst("email"))!=null){
-            //overwrite
-            boolean bool = rsvpService.updateRSVPByEmail(rsvp);
-            return ResponseEntity.status(201).body(bool);
-        }
+            if(rsvpService.getRsvpByEmail(form.getFirst("email"))!=null){
+                //overwrite existing rsvp
+                boolean bool = rsvpService.updateRSVPByEmail(rsvp);
+                return ResponseEntity.status(201).body(bool);
+            }
         }catch(ResourceNotFoundException ex){
-        //insert if diff email
-        boolean bool = rsvpService.insertRsvp(rsvp);
+        //insert if rsvp does not exist
+            boolean bool = rsvpService.insertRsvp(rsvp);
 
-        return ResponseEntity.status(201).body(bool);
+            return ResponseEntity.status(201).body(bool);
         }
 
 
@@ -74,7 +81,7 @@ public class RsvpRESTController {
     @PutMapping(path="/rsvp/{email}", produces=MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Boolean> updateRsvpByEmail(
         @PathVariable(name="email") String email,
-        @RequestParam MultiValueMap<String, String> form){
+        @RequestParam MultiValueMap<String, String> form) throws ParseException{
         
         rsvpService.getRsvpByEmail(email); //doubles as checking whether email is in database
 
@@ -83,7 +90,9 @@ public class RsvpRESTController {
         rsvp2.setEmail(form.getFirst("email"));
         rsvp2.setPhone(form.getFirst("phone"));
         rsvp2.setComments(form.getFirst("comments"));
-
+        //String to Date parser
+        Date date = RSVP.strToDate(form.getFirst("confirmation_date"));
+        rsvp2.setConfirmation_date(date);
 
         boolean bool = rsvpService.updateRSVPByEmail(rsvp2);
 

@@ -1,6 +1,8 @@
 package VTTPday22.workshop2.model;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RSVP {
     private String name;
@@ -21,6 +23,11 @@ public class RSVP {
     public void setComments(String comments) {this.comments = comments;}
 
     
+    public static Date strToDate(String date) throws ParseException{
+        Date convertedDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        // Date convertedDate = new SimpleDateFormat("EEE, MM/dd/yyyy").parse(date);    
+        return convertedDate;
+    }
 
     
 }
