@@ -22,7 +22,7 @@ public class CustomerRepository {
     public List<Customer> getCustomers(){
         List<Customer> customers = new ArrayList<>();
 
-        //returns a list of Customer objects
+        //query returns a list of Customer objects
         customers = template.query(sql.sql_getallCustomers, BeanPropertyRowMapper.newInstance(Customer.class));
 
         return customers;
@@ -32,7 +32,7 @@ public class CustomerRepository {
     public List<Customer> getCustomers(int limit, int offset){
         List<Customer> customers = new ArrayList<>();
 
-        //get set of rows
+        //get set of rows, lets us read sql table results row by row
         SqlRowSet sqlRowSet = template.queryForRowSet(sql.sql_getCustomers_LimitOffSet, limit, offset);
 
         while(sqlRowSet.next()){

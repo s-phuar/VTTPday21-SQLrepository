@@ -72,8 +72,6 @@ public class CustomerRestController {
 
     @PostMapping("/{customer-id}")
     public ResponseEntity<Boolean> insertCustomer(@PathVariable("customer-id") int id, @RequestBody Customer customer){
-        
-
         boolean bool =  customerService.insertCustomer(customer);
 
         return ResponseEntity.ok().body(bool);
